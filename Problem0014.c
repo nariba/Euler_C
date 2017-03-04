@@ -29,6 +29,8 @@ int main(int argc, char const *argv[]) {
   int term=0;
   long max_n = 1;
   int max_term = 1;
+
+  #pragma omp parallel for private(term) reduction(max:max_term, max_n)
   for (i = 1; i < limit; i++) {
     term = 1;
     term = collantz_chain(i, term);
