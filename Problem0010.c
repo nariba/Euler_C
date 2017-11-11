@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "prime.h"
+#include <omp.h>
 
 int main(int argc, char *argv[]) {
     /* Error */
@@ -11,6 +12,7 @@ int main(int argc, char *argv[]) {
     }
     int num = atoi(argv[1]);
     long sum = 0;
+#pragma omp parallel for reduction(+:sum)
     for (int i = 1; i < num; i++) {
         if (is_prime(i, 1000)) {
             sum += i;
