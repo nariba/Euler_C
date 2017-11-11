@@ -1,8 +1,4 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <stdbool.h>
-#include <math.h>
+#include "prime.h"
 
 int imod(long int a, long int n) {
   int r;
@@ -30,6 +26,23 @@ bool is_prime(long int n, int k) {
     }
     else if (n <= 1 || n % 2 == 0 ) {
         ret = false;
+    }
+    else if (n < 200) {
+        if (n == 3 || n == 5 || n == 7 || n == 11
+            || n == 13 || n == 17 || n == 19 || n == 23 || n == 29
+            || n == 31 || n == 37 || n == 41 || n == 43 || n == 47
+            || n == 53 || n == 59 || n == 61 || n == 67 || n == 71
+            || n == 73 || n == 79 || n == 83 || n == 89 || n == 97
+            || n == 101 || n == 103 || n == 107 || n == 109 || n == 113
+            || n == 127 || n == 131 || n == 137 || n == 139 || n == 149
+            || n == 151 || n == 157 || n == 163 || n == 167 || n == 173
+            || n == 179 || n == 181 || n == 191 || n == 193 || n == 197
+            || n == 199) {
+            ret = true;
+        }
+        else {
+            ret = false;
+        }
     }
     else {
         long int d = n - 1;
@@ -62,24 +75,4 @@ bool is_prime(long int n, int k) {
         }
     }
     return ret;
-}
-
-int main(int argc, char *argv[]) {
-    /* Error */
-    if (2 != argc) {
-        printf("Error\n");
-        return 1;
-    }
-    int num = atoi(argv[1]);
-    long int prime = 0;
-    int j = 0;
-    for(long int i = 1; j < num; i++) {
-        if(is_prime(i, 1000)) {
-            j++;
-            prime = i;
-            printf("num=%d:prime=%ld\n", j, prime);
-        }
-    }
-    printf("num:%d, ans=%ld\n", num, prime);
-    return 0;
 }

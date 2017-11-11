@@ -1,20 +1,22 @@
 #include <stdio.h>
-#include "mylib/prime.h"
+#include <stdlib.h>
+#include <stdbool.h>
+#include "prime.h"
+#include <omp.h>
 
-#define limit 2000000
-
-int main(int argc, char const *argv[]) {
-  long sum = 0;
-  int i;
-  #pragma omp parallel for reduction(+:sum)
-  for (i = 2; i <= limit; i++) {
-    if (prime((long)i) == 1) {
-      sum += i;
+int main(int argc, char *argv[]) {
+    /* Error */
+    if (2 != argc) {
+        printf("Error\n");
+        return 1;
     }
-    if (i % 100000 == 0) {
-      printf("%d\n", i);
+    int num = atoi(argv[1]);
+    long sum = 0;
+#pragma omp parallel for reduction(+:sum)
+    for (int i = 1; i < num; i++) {
+        if (is_prime(i, 1000)) {
+            sum += i;
+        }
     }
-  }
-  printf("%ld\n", sum);
-  return 0;
+    printf("ans=%ld\n", sum);
 }

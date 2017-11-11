@@ -1,42 +1,41 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdbool.h>
+#include <math.h>
 
-#define start 100
-#define end 1000
+bool is_palindromic_num(int num) {
+    char *num_c;
+    sprintf(num_c, "%d", num);
+    int len = strlen(num_c);
 
-int is_palindromic(int num) {
-  char str[100];
-  sprintf(str, "%d", num);
-  int len = strlen(str);
-
-  char *c_num;
-  c_num = malloc(sizeof(char) * len);
-  int i, count;
-  if (len % 2 == 0) {
-    count = len/2;
-  }
-  else {
-    count = len/2+1;
-  }
-  for (i = 0; i < count; i++) {
-    if (str[i] != str[len-(i+1)]) {
-      return 0;
+    bool ret = true;
+    for(int i = 0; i < len; i++) {
+        if(num_c[i] != num_c[len - 1 - i]) {
+            ret = false;
+            break;
+        }
     }
-  }
-  return 1;
+    return ret;
 }
 
-int main(int argc, char const *argv[]) {
-  int max = 0;
-  int i, j;
-  for (i = start; i < end; i++) {
-    for (j = start; j < end; j++) {
-      if (is_palindromic(i*j) == 1 && i*j > max) {
-        max = i*j;
-      }
+int main(int argc, char *argv[]) {
+    /* Error */
+    if (2 != argc) {
+        printf("Error\n");
+        return 1;
     }
-  }
-  printf("%d\n", max);
-  return 0;
+    int num = atoi(argv[1]);
+    int max = (int)__exp10((double)num) - 1;
+
+    int i, j, palindromic_max = 0;
+    for(i = max; i > 1; i--) {
+        for(j = i; j <= max; j++) {
+            if(is_palindromic_num(i*j) && palindromic_max < i * j) {
+                palindromic_max = i * j;
+            }
+        }
+    }
+    printf("%d\n", palindromic_max);
+    return 0;
 }

@@ -1,35 +1,26 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int fibonacci(int num) {
-  int a=1;
-  int b=1;
-  int tmp;
-  if (num <= 0) {
-    fprintf(stderr, "invalid\n");
+int main(int argc, char *argv[]) {
+    /* Error */
+    if (2 != argc) {
+        printf("Error\n");
+        return 1;
+    }
+    int limit = atoi(argv[1]);
+
+    long int a0;
+    long int a1 = 2;
+    long int a2 = 1;
+    long int answer = 2;
+    for(int i = 3; a0 < limit; i++) {
+        a0 = a1 + a2;
+        a2 = a1;
+        a1 = a0;
+        if(a0 % 2 == 0) {
+            answer += a0;
+        }
+    }
+    printf("answer=%ld\n", answer);
     return 0;
-  }
-  else if (num <= 1) {
-    return 1;
-  }
-  else {
-    for (int i = 0; i < num-1; i++) {
-      tmp=a;
-      a=a+b;
-      b=tmp;
-    }
-    return a;
-  }
-}
-
-int main(int argc, char const *argv[]) {
-  int i=1;
-  int sum=0;
-  while (fibonacci(i)<4000000) {
-    if (fibonacci(i) % 2 == 0) {
-      sum += fibonacci(i);
-    }
-    i++;
-  }
-  printf("%d\n", sum);
-  return 0;
 }
